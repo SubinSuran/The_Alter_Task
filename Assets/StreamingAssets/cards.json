@@ -1,0 +1,103 @@
+{
+  "cards": [
+    {
+      "id": 1,
+      "name": "Novice Squire",
+      "cost": 1,
+      "power": 2,
+      "ability": null
+    },
+    {
+      "id": 2,
+      "name": "Pet Wolf",
+      "cost": 1,
+      "power": 1,
+      "ability": {
+        "type": "GainPoints",
+        "value": 2
+      }
+    },
+    {
+      "id": 3,
+      "name": "Shield Bearer",
+      "cost": 2,
+      "power": 3,
+      "ability": {
+        "type": "GainPoints",
+        "value": 2
+      }
+    },
+    {
+      "id": 4,
+      "name": "Sneaky Thief",
+      "cost": 2,
+      "power": 1,
+      "ability": {
+        "type": "StealPoints",
+        "value": 2
+      }
+    },
+    {
+      "id": 5,
+      "name": "Elven Archer",
+      "cost": 3,
+      "power": 3,
+      "ability": null
+    },
+    {
+      "id": 6,
+      "name": "Scroll Keeper",
+      "cost": 3,
+      "power": 2,
+      "ability": null
+    },
+    {
+      "id": 7,
+      "name": "Heavy Knight",
+      "cost": 4,
+      "power": 6,
+      "ability": null
+    },
+    {
+      "id": 8,
+      "name": "Saboteur",
+      "cost": 4,
+      "power": 3,
+      "ability": null
+    },
+    {
+      "id": 9,
+      "name": "War Elephant",
+      "cost": 5,
+      "power": 4,
+      "ability": {
+        "type": "DoublePower",
+        "value": 2
+      }
+    },
+    {
+      "id": 10,
+      "name": "Royal Guard",
+      "cost": 5,
+      "power": 7,
+      "ability": {
+        "type": "GainPoints",
+        "value": 3
+      }
+    },
+    {
+      "id": 11,
+      "name": "Shadow Assassin",
+      "cost": 6,
+      "power": 5,
+      "ability": null
+    },
+    {
+      "id": 12,
+      "name": "Ancient Dragon",
+      "cost": 6,
+      "power": 12,
+      "ability": null
+    }
+  ]
+}
