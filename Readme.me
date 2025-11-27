@@ -1,0 +1,99 @@
+Unity Multiplayer Card Game Prototype
+Project Overview
+This project is a 1v1 turn-based strategy card game developed using Unity 6 and Photon Unity Networking 2 (PUN 2). The application demonstrates a decoupled, event-driven networking architecture designed to transmit gameplay data strictly via JSON payloads, adhering to specific architectural constraints regarding RPC usage.
+
+Core Objective: Two players compete to accumulate the highest score over a fixed duration of 6 turns using a shared pool of mechanically distinct cards.
+
+1. Networking Solution Chosen
+Framework: Photon Unity Networking 2 (PUN 2)
+
+The networking layer was engineered specifically to satisfy the assignment requirement of avoiding raw data types in RPC arguments. All network communication occurs through a single, generic entry point using JSON serialization.
+
+Implementation Details:
+Single Generic RPC: The NetworkMessenger.cs class manages all network traffic via a single method: ReceiveMessageRPC(string jsonString).
+
+JSON Payloads: All game events (Turn Start, Card Played, Game Over) are encapsulated in a wrapper class (NetworkMessage) and serialized into JSON strings using Newtonsoft.Json.
+
+Event-Driven Architecture: The system uses C# Actions to decouple networking from game logic. The GameManager subscribes to events within the NetworkMessenger (e.g., OnTurnStart, OnRevealCards), ensuring that game logic does not directly depend on Photon implementation details.
+
+2. JSON System for Cards & Abilities
+The card catalog is fully data-driven and externalized, allowing for balance changes without code recompilation.
+
+Card Definitions
+File Location: StreamingAssets/cards.json
+
+Loading Method: The CardDatabase.cs class loads definitions at runtime using UnityWebRequest. This ensures file access compatibility across platforms, specifically for Android APK structure.
+
+Data Structure
+Cards are defined with the following schema:
+
+JSON
+
+{
+  "cards": [
+    {
+      "id": 1,
+      "name": "Shield Bearer",
+      "cost": 2,
+      "power": 3,
+      "ability": {
+        "type": "GainPoints", 
+        "value": 2
+      }
+    }
+  ]
+}
+Ability Resolution
+Abilities are not hardcoded into card classes. Instead, they are parsed dynamically during the gameplay phase:
+
+The GameManager reads the ability.type string (e.g., "GainPoints", "StealPoints", "DoublePower").
+
+A switch statement in the scoring logic executes the specific math operation associated with that keyword using the ability.value.
+
+3. Instructions to Run & Test
+Prerequisites
+Active Internet connection (required for Photon Cloud connectivity).
+
+Option A: Android (APK)
+Download the CardGame.apk file included in this repository.
+
+Install the package on a compatible Android device.
+
+Launch the application.
+
+Click "Find Match" to connect to the server and enter the matchmaking pool.
+
+Option B: Unity Editor (Source Code)
+Clone this repository.
+
+Open the project in Unity 6000.2 (or compatible version).
+
+Navigate to Assets/Scenes/ and open the Lobby scene.
+
+Press Play.
+
+Click "Find Match".
+
+How to Test Multiplayer Locally
+To simulate a 1v1 match on a single machine:
+
+Open the project in Unity.
+
+Go to File > Build Settings and build a standalone Windows executable.
+
+Run the Windows executable (Player 1).
+
+Press Play in the Unity Editor (Player 2).
+
+Click "Find Match" on both windows to pair them into a room.
+
+Code Architecture
+The codebase follows a modular design pattern to separate concerns and ensure maintainability:
+
+GameManager: Handles the game state machine (Planning, Waiting, Revealing), deck randomization, and scoring logic.
+
+UIManager: Manages all visual elements (score updates, prefab instantiation, panels) with no dependency on game logic.
+
+NetworkMessenger: Acts as the abstraction layer between Photon and the game application.
+
+CardMovement: Handles client-side drag-and-drop physics and input validation (cost checks).
